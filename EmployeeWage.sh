@@ -2,15 +2,17 @@
 
 #CONSTANTS
 EMP_RATE_PER_HR=20
+IS_FULL_TIME=2
+IS_PART_TIME=1
 
-isPresent=1
-randomCheck=$((RANDOM%2))
-if [ $isPresent -eq $randomCheck ]
+randomCheck=$((RANDOM%2+1))
+if [ $randomCheck -eq $IS_FULL_TIME ]
 then
-	echo "Employee is present"
 	empHours=8
+elif [ $randomCheck -eq $IS_PART_TIME ]
+then
+	empHours=4
 else
-	echo "Employee is absent"
 	empHours=0
 fi
 dailyWageCalculate=$(($empHours * $EMP_RATE_PER_HR))
