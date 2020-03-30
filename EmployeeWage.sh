@@ -1,11 +1,13 @@
-#! /bin/bash -x
-
+#!/bin/bash -x
 #CONSTANTS
 EMP_RATE_PER_HR=20
 IS_FULL_TIME=2
 IS_PART_TIME=1
+WORKING_DAYS=20
 
-randomCheck=$((RANDOM%2+1))
+for (( i=1; i<=$WORKING_DAYS; i++ ))
+do
+	randomCheck=$((RANDOM%2+1))
 case $randomCheck in
 	$IS_FULL_TIME)
 		empHours=8
@@ -17,4 +19,6 @@ case $randomCheck in
 		empHours=0
 		;;
 esac
-dailyWageCalculate=$(($empHours * $EMP_RATE_PER_HR))
+	salary=$(($empHours * $EMP_RATE_PER_HR))
+	totalSalary=$(($totalSalary + $salary))
+done
