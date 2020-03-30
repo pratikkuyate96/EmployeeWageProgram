@@ -1,5 +1,8 @@
 #!/bin/bash -x
 
+#DECLARE_ARRAY
+declare -a dailywage
+
 #CONSTANTS
 EMP_RATE_PER_HR=20
 IS_FULL_TIME=2
@@ -25,13 +28,25 @@ function getWorkingHours() {
 			;;
 	esac
 	echo $empHours
-	}
+}
 
+#To get daily wage of employee
+function getDailyWage() {
+	wagePerDay=$(($empHours * $EMP_RATE_PER_HR ))
+echo $wagePerDay
+}
+
+#Calculate wage till the days and hours
+function empWageComputation() {
 while [[ $workingDays -ne $MAX_WORKING_DAYS && $workingHours -ne $MAX_WORKING_HOURS ]]
 do
 ((workingDays++))
 	empHours="$(getWorkingHours)"
 	workingHours=$(($workingHours + $empHours))
+	dailyWage[$workingDays]="$(getDailyWage)"
 done
+echo ${dailyWage[@]}
+	totalSalary=$(($workingHours * $EMP_RATE_PER_HR))
+}
 
-totalSalary=$(($workingHours * $EMP_RATE_PER_HR))
+empWageComputation
