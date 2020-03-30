@@ -11,9 +11,7 @@ MAX_WORKING_HOURS=100
 workingDays=0
 workingHours=0
 
-while [[ $workingDays -ne $MAX_WORKING_DAYS && $workingHours -ne $MAX_WORKING_HOURS ]]
-do
-	((workingDays++))
+function getWorkingHours() {
 	randomCheck=$((RANDOM%2+1))
 	case $randomCheck in
 		$IS_FULL_TIME)
@@ -26,6 +24,14 @@ do
 			empHours=0
 			;;
 	esac
-	workingHours=$(($workingHours * $empHours))
+	echo $empHours
+	}
+
+while [[ $workingDays -ne $MAX_WORKING_DAYS && $workingHours -ne $MAX_WORKING_HOURS ]]
+do
+((workingDays++))
+	empHours="$(getWorkingHours)"
+	workingHours=$(($workingHours + $empHours))
 done
+
 totalSalary=$(($workingHours * $EMP_RATE_PER_HR))
