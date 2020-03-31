@@ -1,11 +1,11 @@
 #! /bin/bash -x
 
 #CONSTANTS
-EMP_RATE_PER_HR=20
+EMPLOYEE_RATE_PER_HOUR=20
 IS_FULL_TIME=2
 IS_PART_TIME=1
 
-randomCheck=$((RANDOM%2+1))
+randomCheck=$((RANDOM%3))
 if [ $randomCheck -eq $IS_FULL_TIME ]
 then
 	empHours=8
@@ -15,4 +15,4 @@ then
 else
 	empHours=0
 fi
-dailyWageCalculate=$(($empHours * $EMP_RATE_PER_HR))
+dailyWageCalculate=$(($empHours * $EMPLOYEE_RATE_PER_HOUR))
