@@ -30,23 +30,37 @@ function getWorkingHours() {
 	echo $empHours
 }
 
+#To get total working hours for a month
+function getTotalWorkingHours() {
+	workingHours=$(($workingHours + $empHours))
+	echo $workingHours
+}
+
 #To get daily wage of employee
 function getDailyWage() {
 	wagePerDay=$(($empHours * $EMP_RATE_PER_HR ))
-echo $wagePerDay
+	echo $wagePerDay
+}
+
+#To get total salary for a month
+function getTotalSalary() {
+	salary=$((workingHours * $EMP_RATE_PER_HR))
+	echo $salary
 }
 
 #Calculate wage till the days and hours
 function empWageComputation() {
-while [[ $workingDays -ne $MAX_WORKING_DAYS && $workingHours -ne $MAX_WORKING_HOURS ]]
-do
-((workingDays++))
-	empHours="$(getWorkingHours)"
-	workingHours=$(($workingHours + $empHours))
-	dailyWage[$workingDays]="$(getDailyWage)"
-done
-echo ${dailyWage[@]}
-	totalSalary=$(($workingHours * $EMP_RATE_PER_HR))
+	while [[ $workingDays -ne $MAX_WORKING_DAYS && $workingHours -ne $MAX_WORKING_HOURS ]]
+	do
+		((workingDays++))
+		empHours="$(getWorkingHours)"
+		workingHours=$(($workingHours + $empHours))
+		dailyWage[$workingDays]="$(getDailyWage)"
+	done
+	echo "Day: ${!dailyWage[@]}"
+	echo "Daily Wage: ${dailyWage[@]}"
+	totalSalary="$(getTotalSalary)"
+	echo "Total Salary: $totalSalary"
 }
 
 empWageComputation
