@@ -1,7 +1,7 @@
-#!/bin/bash -x
+#!/bin/bash
 
 #CONSTANTS
-EMP_RATE_PER_HR=20
+EMPLOYEE_RATE_PER_HOUR=20
 IS_FULL_TIME=2
 IS_PART_TIME=1
 MAX_WORKING_DAYS=20
@@ -12,8 +12,7 @@ workingDays=0
 workingHours=0
 
 function getWorkingHours() {
-	randomCheck=$((RANDOM%2+1))
-	case $randomCheck in
+	case $1 in
 		$IS_FULL_TIME)
 			empHours=8
 			;;
@@ -25,13 +24,14 @@ function getWorkingHours() {
 			;;
 	esac
 	echo $empHours
-	}
+}
 
-while [[ $workingDays -ne $MAX_WORKING_DAYS && $workingHours -ne $MAX_WORKING_HOURS ]]
+while [[ $workingDays -le $MAX_WORKING_DAYS && $workingHours -le $MAX_WORKING_HOURS ]]
 do
-((workingDays++))
-	empHours="$(getWorkingHours)"
+	((workingDays++))
+	empHours="$(getWorkingHours $((RANDOM%3)) )"
 	workingHours=$(($workingHours + $empHours))
 done
 
-totalSalary=$(($workingHours * $EMP_RATE_PER_HR))
+totalSalary=$(($workingHours * $EMPLOYEE_RATE_PER_HOUR))
+echo $workingHours $totalSalary
